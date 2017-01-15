@@ -1,7 +1,7 @@
 #ifndef __MFLY_DATA
 #define __MFLY_DATA
 
-#include <arduino.h>
+#include <Arduino.h>
 #include <SFE_BMP180.h>
 #include <Adafruit_L3GD20_U.h>
 #include <Adafruit_LSM303_U.h>

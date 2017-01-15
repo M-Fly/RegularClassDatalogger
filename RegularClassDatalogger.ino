@@ -22,8 +22,7 @@ Data *data;
 const int hertz = 50;
 const int delayTime = 1000 / hertz;
 
-const int ledPin = 13;
-byte ledState = 0;
+long lastLoopTime = 0;
 
 void setup() {
   // Initiate Serial Port
@@ -32,18 +31,12 @@ void setup() {
   // Create Data class instance
   data = new Data();
   data->update();
-
-  pinMode(ledPin, OUTPUT);
 }
-
-long lastLoopTime = 0;
 
 void loop() {
   // Blink LED and Write Data to Serial regularly
   if (millis() - lastLoopTime > delayTime) {
     lastLoopTime = millis();
-    ledState = !ledState;
-    digitalWrite(ledPin, ledState);
 
     data->update();
     writeData();
@@ -51,8 +44,6 @@ void loop() {
 }
 
 void writeData() {
-  float time = millis() / 1000.0f;
-
   // M-Fly,TIME,ALTITUDE,GYROX,GYROY,GYROZ,ACCELX,ACCELY,ACCELZ,
 
   Serial.print("M-Fly,");
@@ -71,6 +62,5 @@ void writeData() {
   Serial.print(data->getAccelY());
   Serial.print(',');
   Serial.println(data->getAccelZ());
-  
 }
 
