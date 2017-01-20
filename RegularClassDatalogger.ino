@@ -1,10 +1,9 @@
-//M-Fly Flight Control Software
-
-// NOTE: Servos do work, but interrupt input from
-// receiver frequently drops, causing servos to jitter
-// uncontrollably
-
-// NOTE: Altitude Measurement in Meters
+//M-Fly Datalogger Software
+//
+// Units:
+//  - Altitude Measurement in Meters
+//  - Gyroscope Measurment in Rad/Sec
+//  - Accelerometer Measurment in Meters/Sec
 
 #include <Adafruit_Sensor.h>
 
@@ -19,21 +18,16 @@
 Data *data;
 
 // Hertz Rate for Data Collection
-const int hertz = 50;
+const int hertz = 10;
 const int delayTime = 1000 / hertz;
-
-const int ledPin = 13;
-byte ledState = 0;
 
 void setup() {
   // Initiate Serial Port
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   // Create Data class instance
   data = new Data();
   data->update();
-
-  pinMode(ledPin, OUTPUT);
 }
 
 long lastLoopTime = 0;
@@ -42,8 +36,6 @@ void loop() {
   // Blink LED and Write Data to Serial regularly
   if (millis() - lastLoopTime > delayTime) {
     lastLoopTime = millis();
-    ledState = !ledState;
-    digitalWrite(ledPin, ledState);
 
     data->update();
     writeData();
@@ -51,11 +43,7 @@ void loop() {
 }
 
 void writeData() {
-  float time = millis() / 1000.0f;
-
-  // M-Fly,TIME,ALTITUDE,GYROX,GYROY,GYROZ,ACCELX,ACCELY,ACCELZ,
-
-  Serial.print("M-Fly,");
+  // MILLIS,ALTITUDE,GYROX,GYROY,GYROZ,ACCELX,ACCELY,ACCELZ,
   Serial.print(millis());
   Serial.print(',');
   Serial.print(data->getAltitude());
@@ -71,6 +59,5 @@ void writeData() {
   Serial.print(data->getAccelY());
   Serial.print(',');
   Serial.println(data->getAccelZ());
-  
 }
 
