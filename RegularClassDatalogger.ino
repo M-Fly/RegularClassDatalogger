@@ -21,6 +21,8 @@ Data *data;
 const int hertz = 10;
 const int delayTime = 1000 / hertz;
 
+long lastLoopTime = 0;
+
 void setup() {
   // Initiate Serial Port
   Serial.begin(9600);
@@ -29,8 +31,6 @@ void setup() {
   data = new Data();
   data->update();
 }
-
-long lastLoopTime = 0;
 
 void loop() {
   // Blink LED and Write Data to Serial regularly
