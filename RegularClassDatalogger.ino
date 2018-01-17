@@ -4,6 +4,8 @@
 //  - Altitude Measurement in Meters
 //  - Gyroscope Measurment in Rad/Sec
 //  - Accelerometer Measurment in Meters/Sec
+#include <XBee.h>
+#include <stdlib.h>
 
 #include <Adafruit_Sensor.h>
 
