@@ -25,9 +25,8 @@ Data *data = 0;
 const HardwareSerial *xbeeSerial = &Serial1;
 
 // Hertz Rate for Data Collection
-const int hertz = 10;
-const int delayTime1 = 1000 / (2*hertz);
-const int delayTime2 = 1000 / hertz;
+const int hertz = 5;
+const int delayTime1 = 1000 / (hertz);
 
 long lastLoopTime = 0;
 
@@ -99,7 +98,7 @@ void messageA()
 
   message += ';';
 
-  //Serial.println(message);
+  Serial.println(message);
   xbeeSerial->print(message);
 }
 
