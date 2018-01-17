@@ -13,6 +13,7 @@ public:
 	Data();
 
 	double getAltitude();
+  double getPressure();
 
 	double getAccelX();
 	double getAccelY();
@@ -29,7 +30,7 @@ public:
 	void update();
 
 private:
-	double getPressure();
+	
 	void setAltitude(double inputAlt);
 	void setAccelX(double inputAccelX);
 	void setAccelY(double inputAccelY);

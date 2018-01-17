@@ -34,6 +34,9 @@ void setup() {
   // Initiate Serial Port
   Serial.begin(9600);
 
+  // Initiate Xbee Serial Port
+  xbeeSerial->begin(38400);
+
   // Create Data class instance
   data = new Data();
   data->update();
@@ -45,7 +48,9 @@ void loop() {
     lastLoopTime = millis();
 
     data->update();
-    printData();
+    //printData();
+    messageA();
+    messageC();
   }
 }
 
@@ -72,22 +77,55 @@ void printData() {
 //Creates A message
 void messageA()
 {
-  // A,MX2,MILLIS,ALT_BARO,ANALOG_PITOT,PRESS,TEMP,DROP_TIME,DROP_ALT
+  // A,M,MILLIS,ALT_BARO,ANALOG_PITOT,PRESS,TEMP,DROP_TIME,DROP_ALT
+  String message = "";
+  message += "A,";
+  message += "M";
+  message += ',';
+  message += millis();
+  message += ',';
+  message += data->getAltitude();
+  message += ',';
+  message += '0';
+  message += ',';
+  message += data->getPressure();
+  message += ',';
+  message += '0';
+  message += ',';
+  message += '0';
+  message += ',';
+  message += '0';
 
-  
-}
+  message += ';';
 
-//Creates B message
-void messageB()
-{
-  // B,MX2,MILLIS,GPS_SYSTEM,LAT,LON,GPS_SPEED,GPS_COURSE,GPS_ALT,GPS_HDOP
-
+  Serial.println(message);
+  xbeeSerial->print(message);
 }
 
 //Creates C message
 void messageC()
 {
-  // C,MX2,MILLIS,GYROX,GYROY,GYROZ,ACCELX,ACCELY,ACCELZ
+  // C,M,MILLIS,GYROX,GYROY,GYROZ,ACCELX,ACCELY,ACCELZ
+  String message = "";
+  message += "C,";
+  message += 'M';
+  message += ',';
+  message += millis();
+  message += ',';
+  message += data->getGyroX();
+  message += ',';
+  message += data->getGyroY();
+  message += ',';
+  message += data->getGyroZ();
+  message += ',';
+  message += data->getAccelX();
+  message += ',';
+  message += data->getAccelY();
+  message += ',';
+  message += data->getAccelZ();
 
+  message += ';';
+  Serial.println(message);
+  xbeeSerial->print(message);
 }
 
