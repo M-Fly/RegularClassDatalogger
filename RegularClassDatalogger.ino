@@ -31,15 +31,15 @@ const int delayTime1 = 1000 / (hertz);
 long lastLoopTime = 0;
 
 void setup() {
+  delay(500);
   // Initiate Serial Port
-  Serial.begin(9600);
+  Serial.begin(57600);
 
   // Initiate Xbee Serial Port
   xbeeSerial->begin(38400);
 
   // Create Data class instance
   data = new Data();
-  data->update();
 }
 
 void loop() {
